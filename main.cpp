@@ -16,47 +16,31 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QPieSeries* series = new QPieSeries();
+    series->append("Vegetables", .40);
+    series->append("Beans", .20);
+    series->append("Fruit", .15);
+    series->append("Seed/Nuts", .10);
+    series->append("Whole Grains", .15);
 
-    QBarSet* set0 = new QBarSet("Altuve");
-    QBarSet* set1 = new QBarSet("Martinez");
-    QBarSet* set2 = new QBarSet("Segura");
-    QBarSet* set3 = new QBarSet("Simmons");
-    QBarSet* set4 = new QBarSet("Trout");
-
-    *set0 << 283 << 341 << 313 << 338 << 346 << 335;
-    *set1 << 250 << 315 << 282 << 307 << 303 << 330;
-    *set2 << 294 << 246 << 257 << 319 << 300 << 325;
-    *set3 << 248 << 244 << 265 << 281 << 278 << 313;
-    *set4 << 323 << 287 << 299 << 315 << 306 << 313;
-
-    QBarSeries* series = new QBarSeries();
-    series->append(set0);
-    series->append(set1);
-    series->append(set2);
-    series->append(set3);
-    series->append(set4);
+    QPieSlice* slice0 = series->slices().at(0);
+    slice0->setLabelVisible();
+    QPieSlice* slice1 = series->slices().at(1);
+    slice1->setExploded();
+    slice1->setLabelVisible();
+    slice1->setPen(QPen(Qt::darkGreen, 2));
+    slice1->setBrush(Qt::green);
+    QPieSlice* slice2 = series->slices().at(2);
+    slice2->setLabelVisible();
+    QPieSlice* slice3 = series->slices().at(3);
+    slice3->setLabelVisible();
+    QPieSlice* slice4 = series->slices().at(4);
+    slice4->setLabelVisible();
 
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Batting Avg by Year");
-    //No Animation, GridAxisAnimations, SeriesAnimations
-    chart->setAnimationOptions(QChart::AllAnimations);
-    QStringList categories;
-    categories << "2013" << "2014" << "2015" << "2016" << "2017" << "2018";
-    QBarCategoryAxis* axis = new QBarCategoryAxis();
-    axis->append(categories);
-    chart->createDefaultAxes();
-    //chart->setAxisX(axis, series);
-    chart->axes(Qt::Horizontal, series);
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
-
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    QPalette pal = qApp->palette();
-    pal.setColor(QPalette::Window, QRgb(0xFFFFFF));
-    pal.setColor(QPalette::WindowText, QRgb(0x404040));
-    qApp->setPalette(pal);
+    chart->setTitle("Which type of goal Icardi scored this season");
+    chart->legend()->hide();
 
     MainWindow w;
     w.show();
