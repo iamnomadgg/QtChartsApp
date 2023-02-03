@@ -25,15 +25,19 @@ int main(int argc, char *argv[])
 
     QPieSlice* slice0 = series->slices().at(0);
     slice0->setLabelVisible();
+
     QPieSlice* slice1 = series->slices().at(1);
     slice1->setExploded();
     slice1->setLabelVisible();
     slice1->setPen(QPen(Qt::darkGreen, 2));
     slice1->setBrush(Qt::green);
+
     QPieSlice* slice2 = series->slices().at(2);
     slice2->setLabelVisible();
+
     QPieSlice* slice3 = series->slices().at(3);
     slice3->setLabelVisible();
+
     QPieSlice* slice4 = series->slices().at(4);
     slice4->setLabelVisible();
 
@@ -42,7 +46,16 @@ int main(int argc, char *argv[])
     chart->setTitle("Which type of goal Icardi scored this season");
     chart->legend()->hide();
 
-    MainWindow w;
-    w.show();
+    // Used to display the chart
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Create the main app window
+    QMainWindow window;
+
+    // Set the main window widget
+    window.setCentralWidget(chartView);
+    window.resize(420, 300);
+    window.show();
     return a.exec();
 }
